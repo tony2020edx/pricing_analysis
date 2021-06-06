@@ -4,8 +4,9 @@ import pymysql
 
 import time
 
-start = time.time()
+from pandas import DataFrame
 
+start = time.time()
 
 
 data = pd.read_csv("headphones-master_data.csv") #read csv file and save this into a variable named data
@@ -14,7 +15,9 @@ link_list = data['Product_url'].tolist()  #taking athe url value from the data v
 
 price_list = data['Sale_price'].tolist()
 
-crawled_date = time.strftime('%Y-%m-%d') #generate the date format compatiable with mysql
+crawled_date = []
+
+#crawled_date = time.strftime('%Y-%m-%d') #generate the date format compatiable with mysql
 
 connection = pymysql.connect(host='localhost',
                              user='root',
@@ -25,33 +28,36 @@ connection = pymysql.connect(host='localhost',
 my_cursor = connection.cursor() #curser object to communicate with database
 
 
-for i in range(len(link_list)):
+def generate_df():
 
-    link = link_list[i]
+    for i in range(len(link_list)):
 
-    price = price_list[i]
+        link = link_list[i]
 
+        price = price_list[i]
 
+        crawled_date_data = time.strftime('%Y-%m-%d')
 
-    sql = "INSERT INTO comparison (link, price, crawled_date) VALUES (%s, %s, %s)" #sql query to add data to database with three variables
+        crawled_date.append(crawled_date_data)
 
-    val = link , price , crawled_date  #the variables to be addded to the SQL query
-
-
-    my_cursor.execute(sql, val)  #execute the curser obhect to insert the data
-
-    connection.commit() #commit and make the insert permanent
+generate_df()
 
 
-my_cursor.execute("SELECT * from comparison") #load the table contents to verify the insert
+df = pd.DataFrame(list(zip(link_list, price_list, crawled_date)),
+                      columns=['link', 'price', 'crawled_date'])
 
-result = my_cursor.fetchall()
+print(df)
 
-for i in result:
-    print(i)
+df.to_sql('comparison',con = connection, if_exists= 'append', chunksize=1000)
 
-connection.close()
 
-end = time.time()
 
-print(end - start)
+
+
+
+
+
+
+
+
+
