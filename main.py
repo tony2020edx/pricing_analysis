@@ -8,7 +8,6 @@ start = time.time()
 
 
 
-
 data = pd.read_csv("headphones-master_data.csv") #read csv file and save this into a variable named data
 
 link_list = data['Product_url'].tolist()  #taking athe url value from the data vaiable and turn into a list
