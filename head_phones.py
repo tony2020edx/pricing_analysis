@@ -1,3 +1,7 @@
+# code description - This code extracts data from headphones category from flipkart. If you want to change the category just change the urls
+# the base url list
+
+
 import requests
 
 from bs4 import BeautifulSoup
