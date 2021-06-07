@@ -32,7 +32,7 @@ headers_list = [
 
 
 def time_delay():  # code to add a time delay between requests
-    list1 = [4, 6, 6.8, 8, 8.6, 10.1, 12.6, 14.3, 18.2, 20]
+    list1 = [3.1, 3.5, 4.2, 4.5,5.5,6.1,6.5,7.2,7.5,8]
     x = random.choice(list1)
     time.sleep(x)
 
@@ -64,7 +64,7 @@ def percentage_completion(list2, url):  # code to understand the percentage comp
 
     index_value = list2.index(url)
 
-    temp = 1 - ((len(list2) - index_value) / len(list2))
+    temp = 1 - (((len(list2) + 1 ) - index_value) / len(list2))
 
     percentage = round(temp * 100, 2)
 
@@ -79,7 +79,7 @@ def parse_data(url_list):  # parse the data by fecting the url from the list.
 
         percentage_completion(url_list, links)
 
-        new_page = requests.get(links, headers=headers, timeout=5)
+        new_page = requests.get(links, headers=headers)
 
         if new_page.status_code == 200:
 
@@ -104,6 +104,7 @@ connection = pymysql.connect(host='localhost',
 my_cursor = connection.cursor()  # curser object to communicate with database
 
 for i in range(len(mrp_list)):
+
     link = link_list[i]
 
     price = mrp_list[i]
