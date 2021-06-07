@@ -18,7 +18,7 @@ data = pd.read_csv("headphones-master_data.csv")  # read csv file and save this 
 
 link_list = data['Product_url'].tolist()  # taking athe url value from the data vaiable and turn into a list
 
-mrp_list = []
+mrp_list = []  # the list is populated when the parser function exectues
 
 headers_list = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
@@ -32,7 +32,7 @@ headers_list = [
 
 
 def time_delay():  # code to add a time delay between requests
-    list1 = [4, 2.6, 6.8, 3.1, 5.6, 4, 4.5, 6.5, 6]
+    list1 = [4, 6, 6.8, 8, 8.6, 10.1, 12.6, 14.3, 18.2, 20]
     x = random.choice(list1)
     time.sleep(x)
 
@@ -44,7 +44,7 @@ headers = {'User-Agent': user_agent}
 crawled_date = time.strftime('%Y-%m-%d')
 
 
-def get_sale_price(soup):  # tested ok
+def get_sale_price(soup):  # get the sale price of the product
 
     try:
         sale_price = soup.find('div', attrs={'class': '_30jeq3 _16Jk6d'}).text.strip()
@@ -60,7 +60,7 @@ def get_sale_price(soup):  # tested ok
     return sale_price
 
 
-def percentage_completion(list2, url):
+def percentage_completion(list2, url):  # code to understand the percentage completion of scraping
 
     index_value = list2.index(url)
 
@@ -71,7 +71,7 @@ def percentage_completion(list2, url):
     print(f'the percentage completion is {percentage} %')
 
 
-def parse_data(url_list):
+def parse_data(url_list):  # parse the data by fecting the url from the list.
 
     for links in url_list:
 
@@ -104,12 +104,11 @@ connection = pymysql.connect(host='localhost',
 my_cursor = connection.cursor()  # curser object to communicate with database
 
 for i in range(len(mrp_list)):
-
     link = link_list[i]
 
     price = mrp_list[i]
 
-    sql = "INSERT INTO headphones (link, price, crawled_date) VALUES (%s, %s, %s)"  # sql query to add data to database with three variables
+    sql = "INSERT INTO pricing_analysis (link, price, crawled_date) VALUES (%s, %s, %s)"  # sql query to add data to database with three variables
 
     val = link, price, crawled_date  # the variables to be addded to the SQL query
 
