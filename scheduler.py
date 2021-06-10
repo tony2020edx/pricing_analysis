@@ -32,7 +32,7 @@ headers_list = [
 
 
 def time_delay():  # code to add a time delay between requests
-    list1 = [6.1, 6.5, 6.6, 6.7, 6.9, 7.2, 7.5, 7.8, 7.9, 8, 9.1]
+    list1 = [6.1, 6.2, 2, 3, 6.5, 6.6, 6.7, 6.9]
     x = random.choice(list1)
     print(f"The time delay is {x} seconcs")
     time.sleep(x)
