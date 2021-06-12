@@ -16,9 +16,9 @@ start = time.time()
 
 data = pd.read_csv("headphones-master_data.csv")  # read csv file and save this into a variable named data
 
-link_list = data['Product_url'].tolist()  # taking athe url value from the data vaiable and turn into a list
+link_list = data['Product_url'].tolist()  # taking athe url value from the data variable and turn into a list
 
-mrp_list = []  # the list is populated when the parser function exectues
+mrp_list = []  # the list is populated when the parser function executes
 
 headers_list = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
@@ -32,15 +32,11 @@ headers_list = [
 
 
 def time_delay():  # code to add a time delay between requests
-    list1 = [6.1, 6.2, 2, 3, 6.5, 6.6, 6.7, 6.9]
+    list1 = [2, 3, 3.5, 4, 6.1, 6.2, 2, 3, 6.5, 6.6, 6.7, 6.9]
     x = random.choice(list1)
     print(f"The time delay is {x} seconcs")
     time.sleep(x)
 
-
-user_agent = random.choice(headers_list)
-
-headers = {'User-Agent': user_agent}
 
 crawled_date = time.strftime('%Y-%m-%d')
 
@@ -77,6 +73,10 @@ def parse_data(url_list):  # parse the data by fecting the url from the list.
     for links in url_list:
 
         print(links)
+
+        user_agent = random.choice(headers_list)
+
+        headers = {'User-Agent': user_agent}  # randomise user agent
 
         percentage_completion(url_list, links)
 
