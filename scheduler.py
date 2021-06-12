@@ -34,7 +34,7 @@ headers_list = [
 def time_delay():  # code to add a time delay between requests
     list1 = [2, 3, 3.5, 4, 6.1, 6.2, 2, 3, 6.5, 6.6, 6.7, 6.9]
     x = random.choice(list1)
-    print(f"The time delay is {x} seconcs")
+    print(f"The time delay is {x} seconds")
     time.sleep(x)
 
 
@@ -68,7 +68,7 @@ def percentage_completion(list2, url):  # code to understand the percentage comp
     print(f'the percentage completion is {percentage} %')
 
 
-def parse_data(url_list):  # parse the data by fecting the url from the list.
+def parse_data(url_list):  # parse the data by fetching the url from the list.
 
     for links in url_list:
 
@@ -100,9 +100,9 @@ parse_data(link_list)
 connection = pymysql.connect(host='localhost',
                              user='root',
                              password='passme123@#$',
-                             db='hpsize')  # connection obhect to pass the database details
+                             db='hpsize')  # connection object to pass the database details
 
-my_cursor = connection.cursor()  # curser object to communicate with database
+my_cursor = connection.cursor()  # cursor object to communicate with database
 
 for i in range(len(mrp_list)):
     link = link_list[i]
@@ -111,9 +111,9 @@ for i in range(len(mrp_list)):
 
     sql = "INSERT INTO pricing_analysis (link, price, crawled_date) VALUES (%s, %s, %s)"  # sql query to add data to database with three variables
 
-    val = link, price, crawled_date  # the variables to be addded to the SQL query
+    val = link, price, crawled_date  # the variables to be added to the SQL query
 
-    my_cursor.execute(sql, val)  # execute the curser obhect to insert the data
+    my_cursor.execute(sql, val)  # execute the cursor object to insert the data
 
     connection.commit()  # commit and make the insert permanent
 
