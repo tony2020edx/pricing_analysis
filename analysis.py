@@ -38,7 +38,6 @@ def percentage_change(old_price, new_price):  # get the percentage change by acc
     return price_change_percentage
 
 
-
 for count in range(len(link_list)):
 
     if count < offset_value:
@@ -71,16 +70,7 @@ for count in range(len(link_list)):
 
             pass
 
-# print(change_list)
-# print(precentage_change)
-
-# print(len(change_list))
-
-
 for value in precentage_changes:
+    print(value)
 
-    if value < 0:
-
-        print(value)
-    else:
-        pass
+print(len(precentage_changes))
