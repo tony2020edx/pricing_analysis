@@ -78,6 +78,8 @@ def parse_data(url_list):  # parse the data by fetching the url from the list.
 
         headers = {'User-Agent': user_agent}  # randomise user agent
 
+        print(headers)
+
         percentage_completion(url_list, links)
 
         new_page = requests.get(links, headers=headers)
