@@ -1,16 +1,20 @@
 import pandas as pd
 
+import pymysql
+
 df = pd.read_csv("pricing1.csv")
 
 link_list = df['link'].tolist()
 
-unique_urls = set(link_list)
+date_list = df["crawled_date"].tolist()
 
 prices = df['price'].tolist()
 
+precentage_changes = []
+
 change_list = []
 
-precentage_changes = []
+unique_urls = set(link_list)
 
 offset_value = len(unique_urls)
 
@@ -74,3 +78,41 @@ for value in precentage_changes:
     print(value)
 
 print(len(precentage_changes))
+
+connection = pymysql.connect(host='localhost',
+                             user='root',
+                             password='passme123@#$',
+                             db='hpsize')  # connection object to pass the database details
+
+my_cursor = connection.cursor()  # cursor object to communicate with database
+
+for i in range(len(link_list)):
+
+    link = link_list[i]
+
+    price = prices[i]
+
+    crawled_date = date_list[i]
+
+    price_change = change_list[i]
+
+    precentage_change = precentage_changes[i]
+
+    sql = "INSERT INTO sample (link, price, crawled_date, price_change,precentage_change) VALUES (%s, %s, %s,%s,%s)"  # sql query to add data to database with three variables
+
+    val = link, price, crawled_date,price_change,precentage_change  # the variables to be added to the SQL query
+
+    my_cursor.execute(sql, val)  # execute the cursor object to insert the data
+
+    connection.commit()  # commit and make the insert permanent
+
+my_cursor.execute("SELECT * from sample")  # load the table contents to verify the insert
+
+result = my_cursor.fetchall()
+
+for i in result:
+    print(i)
+
+connection.close()
+
+
